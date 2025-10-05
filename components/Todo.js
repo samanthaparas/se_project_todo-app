@@ -30,6 +30,13 @@ class Todo {
     const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
 
     todoNameEl.textContent = this._data.name;
+    // TODO -implement dates
+    //   if (!isNaN(dueDate)) {
+    //     todoDate.textContent = `Due: ${dueDate.toLocaleString("en-US", {
+    //       year: "numeric",
+    //       month: "short",
+    //       day: "numeric",
+    //     })}`; <---- this is what you sould use, you need to refactor
 
     this._generateCheckboxEl();
     this._setEventListeners();
