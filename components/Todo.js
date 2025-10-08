@@ -5,7 +5,9 @@ class Todo {
   }
 
   _setEventListeners() {
-    //set up delete button handler, it is in index.js for reference and make adjustments
+    this._todoDeleteBtn.addEventListener("click", () => {
+      this._todoElement.remove();
+    });
     this._todoCheckboxEl.addEventListener("change", () => {
       this._data.completed = !this._data.completed;
       console.log(this._data.completed);
@@ -27,16 +29,28 @@ class Todo {
 
     const todoNameEl = this._todoElement.querySelector(".todo__name");
     const todoDate = this._todoElement.querySelector(".todo__date");
-    const todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
+    this._todoDeleteBtn = this._todoElement.querySelector(".todo__delete-btn");
 
     todoNameEl.textContent = this._data.name;
-    // TODO -implement dates
-    //   if (!isNaN(dueDate)) {
-    //     todoDate.textContent = `Due: ${dueDate.toLocaleString("en-US", {
-    //       year: "numeric",
-    //       month: "short",
-    //       day: "numeric",
-    //     })}`; <---- this is what you sould use, you need to refactor
+
+    if (this._data.date) {
+      const dueDate = new Date(this._data.date);
+      dueDate.setMinutes(dueDate.getMinutes() - dueDate.getTimezoneOffset());
+
+      if (!isNaN(dueDate)) {
+        todoDate.textContent = `Due: ${dueDate.toLocaleString("en-US", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })}`;
+      } else {
+        todoDate.textContent = "";
+      }
+    } else {
+      todoDate.textContent = "";
+    }
 
     this._generateCheckboxEl();
     this._setEventListeners();
